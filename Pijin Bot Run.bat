@@ -1,0 +1,2 @@
+luvit pijinbot.lua
+pause
