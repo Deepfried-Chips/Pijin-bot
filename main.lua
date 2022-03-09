@@ -35,7 +35,10 @@ client:on('messageCreate', function(message)
 end)
 
 client:on('presenceUpdate',function(member)
-	local activity = member.activity
+	local activity
+	if member.activity ~= nil then
+		activity = member.activity
+	end
 	local activityname = string.lower(activity.name)
 
 	if activityname == "league of legends" then
