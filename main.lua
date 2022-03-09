@@ -39,7 +39,10 @@ client:on('presenceUpdate',function(member)
 	if member.activity ~= nil then
 		activity = member.activity
 	end
-	local activityname = string.lower(activity.name)
+	local activityname
+	if activity.name ~= nil then
+		activityname = string.lower(activity.name)
+	end
 
 	if activityname == "league of legends" then
 		local time = os.time()
