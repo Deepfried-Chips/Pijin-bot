@@ -40,6 +40,7 @@ client:on('ready', function()
 end)
 
 client:on('messageCreate', function(message)
+	--message.member:setNickname(uwuify(message.member.name))
 	if message.author.id == client.user.id then return end
 	print(message.content)
 	local processedmessage = string.lower(message.content)
@@ -68,7 +69,8 @@ client:on('messageCreate', function(message)
 		table.remove(send,1)
 		local concatsend = table.concat(send," ")
 		local uwuified = uwuify(concatsend)
-		message.channel:send({content = uwuified, reference = {message = message, mention = false}})
+		sendtodm(message.member,"Command has been disabled :pensive:\n" .. uwuified)
+		--message.channel:send({content = uwuified, reference = {message = message, mention = false}})
 	end
 end)
 
