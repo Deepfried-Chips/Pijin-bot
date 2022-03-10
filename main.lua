@@ -97,7 +97,7 @@ client:on('presenceUpdate',function(member)
 		if playtime >= 1800 then
 			local guild = member.guild
 			local id = member.user.id
-
+                        sendtodm(member,"You have been kicked for playing Genshin Impact for longer than 30 minutes")
 			guild.kickUser(id,"played genshin for more than 30 minutes")
 		end
 	end
