@@ -25,6 +25,8 @@ end
 function uwuify(string)
 	local replaced,count = string.gsub(string,"[rl]","w")
 	local replaced,count = string.gsub(replaced,"[RL]","W")
+	local replaced,count = string.gsub(replaced,"[n]","ny")
+	local replaced,count = string.gsub(replaced,"[N]","Ny")
 	return replaced, count
 end
 
