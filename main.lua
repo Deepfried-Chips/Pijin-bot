@@ -22,6 +22,12 @@ function splitstring(inputstr, sep)
         return t
 end
 
+function uwuify(string)
+	local replaced,count = string.gsub(string,"[rl]","w")
+	local replaced,count = string.gsub(replaced,"[RL]","W")
+	return replaced, count
+end
+
 function sendtodm(member,content)
 	member.user:getPrivateChannel():send({content = content})
 end
@@ -53,6 +59,14 @@ client:on('messageCreate', function(message)
 		else
 			sendtodm(message.member,":x: \nYou do not have ```Manage Messages``` permission")
 		end
+	end
+	if processedmessage[2] == 'uwuify' then
+		local send = splitstring(message.content)
+		table.remove(send,1)
+		table.remove(send,1)
+		local concatsend = table.concat(send," ")
+		local uwuified = uwuify(concatsend)
+		message.channel:send({content = uwuified, reference = {message = message, mention = false}})
 	end
 end)
 
