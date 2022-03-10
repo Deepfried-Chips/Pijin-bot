@@ -1,2 +1,2 @@
-luvit pijinbot.lua
+luvit main.lua
 pause
