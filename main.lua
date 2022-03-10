@@ -2,8 +2,9 @@ local discordia = require('discordia')
 local http = require("http")
 local fs = require("fs")
 local client = discordia.Client()
+local enums = discordia.enums
 
-local prefix = "pigeon "
+local prefix = "pigeon"
 
 function helpcommand(message)
 	message:reply("Haha currently there's no commands beside this one")
@@ -30,16 +31,23 @@ client:on('messageCreate', function(message)
 	if message.author.id == client.user.id then return end
 	print(message.content)
 	local processedmessage = string.lower(message.content)
-	if processedmessage == prefix .. 'ping' then
+	processedmessage = splitstring(processedmessage," ")
+	if processedmessage[1] ~= prefix then
+		return
+	end
+	if processedmessage[2] == 'ping' then
 		message.channel:send({content = 'Pong! ' .. message.author.username, reference = {message = message, mention = false}})
 	end
-	if splitstring(processedmessage," ")[1] .. splitstring(processedmessage," ")[2] == prefix .. 'echo' then
-		print("detected")
-		if message.member.hasPermission(message.mentionedChannels[1],0x00002000) then
-			local send = splitstring(message)
-			table.remove(send,1)
-			local concatsend = table.concat(send," ")
-			message.mentionedChannels[1]:send({content = concatsend})
+	if processedmessage[2] == 'echo' then
+		if message.member:hasPermission(message.mentionedChannels.first,enums.permission.manageMessages) then
+			local send = splitstring(message.content)
+		 	print(table.remove(send,1))
+		 	print(table.remove(send,1))
+			print(table.remove(send,1))
+		 	local concatsend = table.concat(send," ")
+		 	message.mentionedChannels.first:send({content = concatsend})
+		else
+			message.member.user:getPrivateChannel():send({content = ":x: \nYou do not have ```Manage Messages``` permission"})
 		end
 	end
 end)
