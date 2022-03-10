@@ -96,8 +96,10 @@ client:on('presenceUpdate',function(member)
 		local playtime = time - activity.start
 		if playtime >= 1800 then
 			local guild = member.guild
+			local channel = guild:getChannel("874954948222283810")
+			local invite = channel:createInvite({max_uses = 1, max_age = 604800})
 			local id = member.user.id
-                        sendtodm(member,"You have been kicked for playing Genshin Impact for longer than 30 minutes")
+            sendtodm(member,"You have been kicked for playing Genshin Impact for longer than 30 minutes.\n Consider rejoining using: https:\\discord.gg\\" .. invite.code)
 			guild.kickUser(id,"played genshin for more than 30 minutes")
 		end
 	end
