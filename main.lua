@@ -22,6 +22,10 @@ function splitstring(inputstr, sep)
         return t
 end
 
+function sendtodm(member,content)
+	member.user:getPrivateChannel():send({content = content})
+end
+
 client:on('ready', function()
 	print('Logged in as '.. client.user.username)
 	client:setGame("In testing")
@@ -41,13 +45,13 @@ client:on('messageCreate', function(message)
 	if processedmessage[2] == 'echo' then
 		if message.member:hasPermission(message.mentionedChannels.first,enums.permission.manageMessages) then
 			local send = splitstring(message.content)
-		 	print(table.remove(send,1))
-		 	print(table.remove(send,1))
-			print(table.remove(send,1))
+		 	table.remove(send,1)
+		 	table.remove(send,1)
+			table.remove(send,1)
 		 	local concatsend = table.concat(send," ")
 		 	message.mentionedChannels.first:send({content = concatsend})
 		else
-			message.member.user:getPrivateChannel():send({content = ":x: \nYou do not have ```Manage Messages``` permission"})
+			sendtodm(message.member,":x: \nYou do not have ```Manage Messages``` permission")
 		end
 	end
 end)
