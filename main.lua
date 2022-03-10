@@ -73,7 +73,7 @@ end)
 -- 	end
 -- end)
 
-local fd = fs.openSync(".\token.txt",nil,"r")
+local fd = fs.openSync(".\token.txt","r",0)
 local token = fs.readSync(fd,4096,0)
 print(token)
 
