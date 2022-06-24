@@ -1,0 +1,1 @@
+worker: bin\pijin.exe

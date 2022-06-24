@@ -28,7 +28,12 @@ type ExtendedCommand struct {
 func init() { flag.Parse() }
 
 func init() {
-	ReadTokenFromFile("token.txt")
+	if ReadTokenFromFile("token.txt") {
+		log.Println("Token read from file")
+	} else {
+		log.Println("Token not read from file, fetching from env")
+		*BotToken = os.Getenv("TOKEN")
+	}
 	var err error
 	s, err = discordgo.New("Bot " + *BotToken)
 	if err != nil {
@@ -36,24 +41,24 @@ func init() {
 	}
 }
 
-func ReadTokenFromFile(file string) {
+func ReadTokenFromFile(file string) bool {
 	f, err := os.Open(file)
 	if err != nil {
-		panic(err)
+		return false
 	}
 	defer func(f *os.File) {
 		err := f.Close()
 		if err != nil {
-
 		}
 	}(f)
 	buf := make([]byte, 1024)
 	n, err := f.Read(buf)
 	if err != nil {
-		panic(err)
+
 	}
 	buf = buf[:n]
 	*BotToken = string(buf)
+	return true
 }
 
 func init() {
