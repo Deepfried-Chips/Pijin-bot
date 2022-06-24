@@ -1,1 +1,1 @@
-worker: bin\pijin
+worker: bin/pijin
