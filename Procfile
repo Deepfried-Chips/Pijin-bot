@@ -1,1 +1,1 @@
-worker: bin\pijin.exe
+worker: bin\pijin
