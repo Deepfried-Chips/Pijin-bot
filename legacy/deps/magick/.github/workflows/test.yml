@@ -1,0 +1,55 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu:
+    strategy:
+      fail-fast: false
+      matrix:
+        luaVersion: ["luajit", "luajit-openresty"]
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@master
+
+    - uses: leafo/gh-actions-lua@master
+      with:
+        luaVersion: ${{ matrix.luaVersion }}
+
+    - uses: leafo/gh-actions-luarocks@master
+
+    - name: build
+      run: |
+        sudo apt-get install libmagickwand-dev
+        sudo apt-get install libgraphicsmagick1-dev
+        luarocks install busted
+        luarocks install moonscript
+        luarocks make
+
+    - name: show libs
+      run: |
+        /usr/lib/x86_64-linux-gnu/ImageMagick*/bin*/MagickWand-config --libs --cflags
+        GraphicsMagickWand-config --libs --cflags
+        convert -version
+
+    - name: test
+      run: |
+        busted -o utfTerminal
+        busted -o utfTerminal spec_gm
+        make lint
+
+  archlinux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: build
+      run: |
+        docker build -t magick-test .
+
+    - name: test
+      run: |
+        docker run magick-test
