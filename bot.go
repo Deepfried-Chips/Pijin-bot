@@ -260,7 +260,7 @@ var (
 							Description: unsplash.Description,
 							Author: &discordgo.MessageEmbedAuthor{
 								Name: fmt.Sprintf("Photo by %s, taken from unsplash", unsplash.User.Name),
-								URL:  unsplash.User.Links.Self,
+								URL:  unsplash.User.Links.HTML,
 							},
 						},
 					},
