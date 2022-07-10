@@ -250,10 +250,10 @@ var (
 					Embeds: []*discordgo.MessageEmbed{
 						{
 							Title: "Random Pigeon (Click to view image on unsplash)",
-							URL:   fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.Self),
+							URL:   fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.HTML),
 							Image: &discordgo.MessageEmbedImage{
 								URL:      unsplash.URLs.Raw,
-								ProxyURL: fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.Self),
+								ProxyURL: fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.HTML),
 								Width:    unsplash.Width,
 								Height:   unsplash.Height,
 							},
