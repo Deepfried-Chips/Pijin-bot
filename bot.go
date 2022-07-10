@@ -11,7 +11,8 @@ import (
 
 // BotToken Flags
 var (
-	BotToken = flag.String("token", "", "Bot token")
+	BotToken      = flag.String("token", "", "Bot token")
+	UnsplashToken = flag.String("unsplash-token", "", "Unsplash token")
 )
 
 var (
@@ -28,11 +29,19 @@ type ExtendedCommand struct {
 func init() { flag.Parse() }
 
 func init() {
-	if ReadTokenFromFile("token.txt") {
+	token := ReadTokenFromFile("token.txt")
+	if token != "" {
 		log.Println("Token read from file")
 	} else {
 		log.Println("Token not read from file, fetching from env")
 		*BotToken = os.Getenv("TOKEN")
+	}
+	unsplashunique := ReadTokenFromFile("unsplash-token.txt")
+	if unsplashunique != "" {
+		log.Println("Unsplash token read from file")
+	} else {
+		log.Println("Unsplash token not read from file, fetching from env")
+		*UnsplashToken = os.Getenv("UNSPLASH_TOKEN")
 	}
 	var err error
 	s, err = discordgo.New("Bot " + *BotToken)
@@ -41,10 +50,10 @@ func init() {
 	}
 }
 
-func ReadTokenFromFile(file string) bool {
+func ReadTokenFromFile(file string) string {
 	f, err := os.Open(file)
 	if err != nil {
-		return false
+		return ""
 	}
 	defer func(f *os.File) {
 		err := f.Close()
@@ -57,8 +66,7 @@ func ReadTokenFromFile(file string) bool {
 
 	}
 	buf = buf[:n]
-	*BotToken = string(buf)
-	return true
+	return string(buf)
 }
 
 func init() {
@@ -68,46 +76,6 @@ func init() {
 			h(s, i)
 		}
 	})
-}
-
-func DMUser(s *discordgo.Session, m *discordgo.Message, msg string) {
-	channel, err := s.UserChannelCreate(m.Author.ID)
-	if err != nil {
-		// If an error occurred, we failed to create the channel.
-		//
-		// Some common causes are:
-		// 1. We don't share a server with the user (not possible here).
-		// 2. We opened enough DM channels quickly enough for Discord to
-		//    label us as abusing the endpoint, blocking us from opening
-		//    new ones.
-		fmt.Println("error creating channel:", err)
-		_, err := s.ChannelMessageSend(
-			m.ChannelID,
-			"Something went wrong while sending the DM!",
-		)
-		if err != nil {
-			return
-		}
-		return
-	}
-	// Then we send the message through the channel we created.
-	_, err = s.ChannelMessageSend(channel.ID, "Pong!")
-	if err != nil {
-		// If an error occurred, we failed to send the message.
-		//
-		// It may occur either when we do not share a server with the
-		// user (highly unlikely as we just received a message) or
-		// the user disabled DM in their settings (more likely).
-		fmt.Println("error sending DM message:", err)
-		_, err := s.ChannelMessageSend(
-			m.ChannelID,
-			"Failed to send you a DM. "+
-				"Did you disable DM in your privacy settings?",
-		)
-		if err != nil {
-			return
-		}
-	}
 }
 
 var (

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08e04a5f-683c-498f-9a17-bef8f5433267" name="Changes" comment="major changes">
+      <change afterPath="$PROJECT_DIR$/unsplash-token.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,15 +129,23 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="MAIN">
+        <entry key="96d6793d-1d57-4279-98bd-83946e5b609e">
           <value>
             <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="rewritego" />
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
                       </list>
                     </value>
                   </entry>
@@ -145,6 +154,16 @@
             </State>
           </value>
         </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="96d6793d-1d57-4279-98bd-83946e5b609e" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
