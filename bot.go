@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 )
@@ -26,18 +29,78 @@ type ExtendedCommand struct {
 	applicationcommand *discordgo.ApplicationCommand
 }
 
+type UnsplashRandom struct {
+	ID          string `json:"id"`
+	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
+	Width       int    `json:"width"`
+	Height      int    `json:"height"`
+	Color       string `json:"color"`
+	Description string `json:"description"`
+	URLs        struct {
+		Raw     string `json:"raw"`
+		Regular string `json:"regular"`
+		Small   string `json:"small"`
+		Full    string `json:"full"`
+		Thumb   string `json:"thumb"`
+		S3      string `json:"small-s3"`
+	}
+	Links struct {
+		Self             string `json:"self"`
+		HTML             string `json:"html"`
+		Download         string `json:"download"`
+		DownloadLocation string `json:"download_location"`
+	} `json:"links"`
+	User struct {
+		ID        string `json:"id"`
+		UpdatedAt string `json:"updated_at"`
+		Username  string `json:"username"`
+		Name      string `json:"name"`
+		Links     struct {
+			Self      string `json:"self"`
+			HTML      string `json:"html"`
+			Photos    string `json:"photos"`
+			Likes     string `json:"likes"`
+			Portfolio string `json:"portfolio"`
+		} `json:"links"`
+	} `json:"user"`
+}
+
 func init() { flag.Parse() }
 
+func UnsplashImageFromApi(query string) *UnsplashRandom {
+	resp, err := http.Get(fmt.Sprintf("https://api.unsplash.com/photos/random?query=%v&client_id=%v", query, *UnsplashToken))
+	if err != nil {
+		log.Fatalf("An Error Occured %v", err)
+	}
+
+	var unsplash *UnsplashRandom
+
+	err = json.NewDecoder(resp.Body).Decode(&unsplash)
+	if err != nil {
+		var invalid *UnsplashRandom
+		return invalid
+	}
+
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
+	return unsplash
+}
+
 func init() {
-	token := ReadTokenFromFile("token.txt")
-	if token != "" {
+	*BotToken = ReadTokenFromFile("token.txt")
+	if *BotToken != "" {
 		log.Println("Token read from file")
 	} else {
 		log.Println("Token not read from file, fetching from env")
 		*BotToken = os.Getenv("TOKEN")
 	}
-	unsplashunique := ReadTokenFromFile("unsplash-token.txt")
-	if unsplashunique != "" {
+	*UnsplashToken = ReadTokenFromFile("unsplash-token.txt")
+	if *UnsplashToken != "" {
 		log.Println("Unsplash token read from file")
 	} else {
 		log.Println("Unsplash token not read from file, fetching from env")
@@ -106,6 +169,12 @@ var (
 				},
 			},
 		},
+		{
+			applicationcommand: &discordgo.ApplicationCommand{
+				Name:        "randompigeon",
+				Description: "uses unsplash to get a random image of a pigeon",
+			},
+		},
 	}
 	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"ping": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -166,6 +235,40 @@ var (
 				return
 			}
 
+		},
+		"randompigeon": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			var (
+				query = "pigeon"
+				err   error
+			)
+
+			var unsplash = UnsplashImageFromApi(query)
+
+			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Embeds: []*discordgo.MessageEmbed{
+						{
+							Title: "Random Pigeon (Click to view image on unsplash)",
+							URL:   fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.Self),
+							Image: &discordgo.MessageEmbedImage{
+								URL:      unsplash.URLs.Raw,
+								ProxyURL: fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.Self),
+								Width:    unsplash.Width,
+								Height:   unsplash.Height,
+							},
+							Description: unsplash.Description,
+							Author: &discordgo.MessageEmbedAuthor{
+								Name: fmt.Sprintf("Photo by %s, taken from unsplash", unsplash.User.Name),
+								URL:  unsplash.User.Links.Self,
+							},
+						},
+					},
+				},
+			})
+			if err != nil {
+				return
+			}
 		},
 	}
 )

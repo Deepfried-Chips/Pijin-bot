@@ -14,7 +14,7 @@ type JSONMaster struct {
 
 type JSONCommand struct {
 	name               string
-	applicationcommand *discordgo.ApplicationCommand `json:"ApplicationCommand"`
+	Applicationcommand *discordgo.ApplicationCommand `json:"ApplicationCommand"`
 	handler            string
 }
 
@@ -27,11 +27,11 @@ func LoadCommands(s *discordgo.Session, file string) []*JSONCommand {
 	}
 	registeredCommands := make([]*JSONCommand, len(master.Commands))
 	for i, command := range master.Commands {
-		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, "", command.applicationcommand)
+		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, "", command.Applicationcommand)
 		if err != nil {
 			return nil
 		}
-		command.applicationcommand = cmd
+		command.Applicationcommand = cmd
 		registeredCommands[i] = command
 	}
 	return registeredCommands
@@ -42,14 +42,14 @@ func GenerateExampleCommandsJson() {
 	master.Commands = []*JSONCommand{
 		{
 			name: "ping",
-			applicationcommand: &discordgo.ApplicationCommand{
+			Applicationcommand: &discordgo.ApplicationCommand{
 				Name:        "ping",
 				Description: "Ping",
 			},
 		},
 		{
 			name: "echo",
-			applicationcommand: &discordgo.ApplicationCommand{
+			Applicationcommand: &discordgo.ApplicationCommand{
 				Name:        "echo",
 				Description: "make the bot relay a message to a channel",
 				Options: []*discordgo.ApplicationCommandOption{

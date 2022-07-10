@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08e04a5f-683c-498f-9a17-bef8f5433267" name="Changes" comment="major changes">
-      <change afterPath="$PROJECT_DIR$/unsplash-token.txt" afterDir="false" />
+    <list default="true" id="08e04a5f-683c-498f-9a17-bef8f5433267" name="Changes" comment="remove .env for good">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,7 @@
   </component>
   <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../Program Files/Go" />
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -120,7 +122,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655992609147</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="unsplash integration beginning">
+      <created>1657483037196</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657483037196</updated>
+    </task>
+    <task id="LOCAL-00003" summary="remove .env for good">
+      <created>1657483302513</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1657483302513</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,16 +177,13 @@
         </entry>
       </map>
     </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="96d6793d-1d57-4279-98bd-83946e5b609e" value="TOOL_WINDOW" />
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="major changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="major changes" />
+    <MESSAGE value="unsplash integration beginning" />
+    <MESSAGE value="remove .env for good" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove .env for good" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
