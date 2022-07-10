@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08e04a5f-683c-498f-9a17-bef8f5433267" name="Changes" comment="remove .env for good">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config.go" afterDir="false" />
-    </list>
+    <list default="true" id="08e04a5f-683c-498f-9a17-bef8f5433267" name="Changes" comment="RANDOM PIGEON COMMAND!!!!!" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657483302513</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="RANDOM PIGEON COMMAND!!!!!">
+      <created>1657487930267</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1657487930267</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,7 +186,8 @@
     <MESSAGE value="major changes" />
     <MESSAGE value="unsplash integration beginning" />
     <MESSAGE value="remove .env for good" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove .env for good" />
+    <MESSAGE value="RANDOM PIGEON COMMAND!!!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="RANDOM PIGEON COMMAND!!!!!" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
