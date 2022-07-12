@@ -1,4 +1,4 @@
-module PijinGo
+module pijin
 
 go 1.18
 

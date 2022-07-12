@@ -66,6 +66,10 @@ type UnsplashRandom struct {
 	} `json:"user"`
 }
 
+type UnsplashDownloadLoc struct {
+	URL string `json:"url"`
+}
+
 func init() { flag.Parse() }
 
 func UnsplashImageFromApi(query string) *UnsplashRandom {
@@ -244,30 +248,45 @@ var (
 
 			var unsplash = UnsplashImageFromApi(query)
 
-			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
-				Type: discordgo.InteractionResponseChannelMessageWithSource,
-				Data: &discordgo.InteractionResponseData{
-					Embeds: []*discordgo.MessageEmbed{
-						{
-							Title: "Random Pigeon (Click to view image on unsplash)",
-							URL:   fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.HTML),
-							Image: &discordgo.MessageEmbedImage{
-								URL:      unsplash.URLs.Raw,
-								ProxyURL: fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.HTML),
-								Width:    unsplash.Width,
-								Height:   unsplash.Height,
-							},
-							Description: unsplash.Description,
-							Author: &discordgo.MessageEmbedAuthor{
-								Name: fmt.Sprintf("Photo by %s, taken from unsplash", unsplash.User.Name),
-								URL:  unsplash.User.Links.HTML,
+			if unsplash.URLs.Small != "" {
+
+				fmt.Println(unsplash.URLs.Small)
+				fmt.Println(unsplash.Links.DownloadLocation)
+
+				err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+					Type: discordgo.InteractionResponseChannelMessageWithSource,
+					Data: &discordgo.InteractionResponseData{
+						Embeds: []*discordgo.MessageEmbed{
+							{
+								Title: "Random Pigeon (click to view on Unsplash)",
+								URL:   fmt.Sprintf("%s?utm_source=Pijin-Bot&utm_medium=referral", unsplash.Links.HTML),
+								Image: &discordgo.MessageEmbedImage{
+									URL:    unsplash.URLs.Small,
+									Width:  512,
+									Height: 512,
+								},
+								Description: fmt.Sprintf("ALL IMAGES ARE TAKEN FROM UNSPLASH.COM\n\n%s", unsplash.Description),
+								Author: &discordgo.MessageEmbedAuthor{
+									Name: fmt.Sprintf("Photo by %s", unsplash.User.Name),
+									URL:  unsplash.User.Links.HTML,
+								},
 							},
 						},
 					},
-				},
-			})
-			if err != nil {
-				return
+				})
+				if err != nil {
+					return
+				}
+			} else {
+				err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+					Type: discordgo.InteractionResponseChannelMessageWithSource,
+					Data: &discordgo.InteractionResponseData{
+						Content: "Something happened, I couldn't find a random pigeon! (Small Image URL is Blank)",
+					},
+				})
+				if err != nil {
+					return
+				}
 			}
 		},
 	}
