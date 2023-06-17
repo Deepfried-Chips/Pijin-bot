@@ -8,11 +8,11 @@ github.com/gorilla/websocket
 ## explicit; go 1.16
 github.com/traefik/yaegi/internal/unsafe2
 github.com/traefik/yaegi/interp
-# golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
+# golang.org/x/crypto v0.1.0
 ## explicit; go 1.17
-golang.org/x/crypto/internal/subtle
+golang.org/x/crypto/internal/alias
+golang.org/x/crypto/internal/poly1305
 golang.org/x/crypto/nacl/secretbox
-golang.org/x/crypto/poly1305
 golang.org/x/crypto/salsa20/salsa
 # golang.org/x/sys v0.1.0
 ## explicit; go 1.17
